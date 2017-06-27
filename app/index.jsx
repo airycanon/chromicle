@@ -1,45 +1,20 @@
-import React, {Component} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import {observable,computed} from 'mobx';
-import {PropTypes,observer} from "mobx-react";
-import Todo from './store/Todo'
-import TodoView from './components/Todo'
+import HistoryList from './components/HistoryList';
+import HistoryStore from './stores/HistoryStore';
+import {Row, Col, Calendar, LocaleProvider} from 'antd';
+import zhTW from 'antd/lib/locale-provider/zh_TW';
+import 'antd/dist/antd.css';
 
+const store = new HistoryStore();
+store.getHistories();
 
-class TodoList {
-    @observable todos = [];
-
-    @computed get unfinishedTodoCount() {
-        return this.todos.filter(todo => !todo.finished).length;
-    }
-}
-
-@observer
-class TodoListView extends Component {
-
-    render() {
-        return (
-            <div>
-                <ul>
-                    {this.props.todoList.todos.map(todo => (
-                        <TodoView todo={todo} key={todo.id}/>
-                    ))}
-                </ul>
-                Tasks left: {this.props.todoList.unfinishedTodoCount}
-            </div>
-        );
-    }
-}
-
-TodoListView.propTypes = {
-    todoList: PropTypes.objectOrObservableObject
-}
-
-const store = new TodoList();
-
-ReactDOM.render(<TodoListView todoList={store}/>, document.getElementById('app'));
-
-store.todos.push(new Todo('Get Coffee'), new Todo('Write simpler code'));
-store.todos[0].finished = true;
-
-window.store = store;
+ReactDOM.render(
+    <LocaleProvider locale={zhTW}>
+        <Row gutter={16}>
+            <Col span={18} push={6}><HistoryList historyStore={store}/></Col>
+            <Col span={6} pull={18}><Calendar /></Col>
+        </Row>
+    </LocaleProvider>,
+    document.getElementById('app')
+);
