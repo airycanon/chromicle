@@ -3,7 +3,7 @@ import {PropTypes, observer} from "mobx-react";
 import HistoryItem from "./HistoryItem";
 
 @observer
-export default class TodoList extends Component {
+export default class HistoryList extends Component {
 
     render() {
         const {historyStore} = this.props;
@@ -20,6 +20,6 @@ export default class TodoList extends Component {
     }
 }
 
-TodoList.propTypes = {
+HistoryList.propTypes = {
     historyStore: PropTypes.objectOrObservableObject
 }

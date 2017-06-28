@@ -1,12 +1,8 @@
 import {observable,computed} from 'mobx';
 import History from '../models/History';
 
-export default class TodoList {
+export default class HistoryStore {
     @observable histories = [];
-
-    @computed get unfinishedTodoCount() {
-        //return this.todos.filter(todo => !todo.finished).length;
-    }
 
     getHistories () {
         const microsecondsPerWeek = 1000 * 60 * 60 * 24 * 7;

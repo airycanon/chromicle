@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack  --progress",
     "watch": "webpack  --watch",
-    "dev": "webpack-dev-server --hot --content-base app",
+    "dev": "webpack-dev-server --hot --content-base src",
     "prod": "NODE_ENV=production webpack --config webpack.prod.config.js"
   },
   "dependencies": {
@@ -28,7 +28,11 @@
     "babel-preset-react": "6.x",
     "babel-preset-stage-2": "6.x",
     "css-loader": "~0.26.1",
+    "extract-text-webpack-plugin": "^2.1.2",
+    "less": "^2.7.2",
+    "less-loader": "^4.0.4",
     "style-loader": "~0.13.1",
+    "uglifyjs-webpack-plugin": "^0.4.6",
     "webpack": "^2.6.1",
     "webpack-dev-server": "^2.4.5"
   },
