@@ -1,22 +1,38 @@
 import React, {Component} from 'react';
 import '../assets/less/index.less';
-import {Row, Col, Calendar} from 'antd';
-import HistoryList from './HistoryList';
-import PropTypes from 'prop-types';
+import {Col, Layout, Menu, Calendar, Card, Radio} from 'antd';
 
 export default class App extends Component {
 
     render() {
-        const {store} = this.props;
+        const {Header, Content, Footer, Sider} = Layout;
         return (
-            <Row gutter={16}>
-                <Col span={18} push={6}><HistoryList historyStore={store}/></Col>
-                <Col span={6} pull={18}><Calendar /></Col>
-            </Row>
+            <Layout>
+                <Header className="header">
+                    <div className="logo"/>
+                    <Col style={{
+                        display: 'flex',
+                        justifyContent: 'flex-start',
+                        flexDirection: 'row',
+                        alignItems: 'center'
+                    }}>
+                        <Radio.Group style={{marginLeft: 'auto'}}>
+                            <Radio.Button value="large">日历视图</Radio.Button>
+                            <Radio.Button value="default">列表视图</Radio.Button>
+                        </Radio.Group>
+                    </Col>
+                </Header>
+                <Content style={{padding: '0 16px'}}>
+                    <div style={{minHeight: 360}}>
+                        <Card>
+                            <Calendar/>
+                        </Card>
+                    </div>
+                </Content>
+                <Footer style={{textAlign: 'center'}}>
+                    Chrome by airycanon
+                </Footer>
+            </Layout>
         );
     }
-}
-
-App.propTypes = {
-    store: PropTypes.object
 }

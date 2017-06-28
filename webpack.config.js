@@ -1,15 +1,28 @@
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 let plugins = [
-    new webpack.HotModuleReplacementPlugin(),
-    new ExtractTextPlugin('style.css')
+    new ExtractTextPlugin('style.css'),
+    new CopyWebpackPlugin([
+        {from: "src/manifest.json", to: './'},
+        {from: "src/index.html", to: './'},
+        {from: 'src/assets/fonts', to: './fonts'}
+    ])
 ];
 
 if (process.env.NODE_ENV === 'production') {
-    plugins.push(new UglifyJSPlugin());
+    plugins.push(new webpack.optimize.UglifyJSPlugin({
+        compress: {
+            warnings: false
+        }
+    }));
+    plugins.push(new webpack.DefinePlugin({
+        'process.env': {
+            NODE_ENV: JSON.stringify('production')
+        }
+    }));
 }
 
 module.exports = {
