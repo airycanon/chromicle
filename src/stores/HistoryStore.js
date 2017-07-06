@@ -18,13 +18,11 @@ class History {
 }
 
 class TimeRange {
-    key = ''
     histories = [];
 
     constructor(start, end) {
         this.start = start;
         this.end = end;
-        this.key = start.format('YYYY-MM-DD HH:mm')
     }
 }
 
@@ -52,13 +50,12 @@ export default class HistoryStore {
         let ranges = {};
         for (let historyItem of historyItems) {
             let minute = moment(historyItem.lastVisitTime);
-            let range = new TimeRange(minute.startOf('minute'), minute.endOf('minute'));
-            if (!ranges[range.key]) {
-                ranges[range.key] = [];
+            let key = minute.format('YYYY-MM-DD HH:mm');
+            if (!ranges[key]) {
+                ranges[key] = new TimeRange(minute.startOf('minute'), minute.endOf('minute'));
             }
-            ranges[range.key].push(new History(historyItem));
+            ranges[key].histories.push(new History(historyItem));
             this.ranges = ranges;
-            console.log(this.ranges);
         }
     }
 
