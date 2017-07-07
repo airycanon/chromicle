@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import '../assets/less/index.less';
 import {Row, Col, Layout, Timeline, Input} from 'antd';
-import {PropTypes, observer} from "mobx-react";
+import {observer, inject} from "mobx-react";
 import HistoryCard from './HistoryCard';
 
+@inject('store')
 @observer
 export default class App extends Component {
 
@@ -31,9 +32,9 @@ export default class App extends Component {
                     <Col offset={6} span={12}>
                         <Timeline>
                             {
-                                Object.keys(store.ranges).map(range => (
-                                    <Timeline.Item key={range}>
-                                        <HistoryCard key={range + 'cards'} title={range} range={store.ranges[range]}/>
+                                store.ranges.map(range => (
+                                    <Timeline.Item key={range.key}>
+                                        <HistoryCard key={range.key + 'cards'} title={range.key} range={range}/>
                                     </Timeline.Item>)
                                 )
                             }
@@ -47,7 +48,3 @@ export default class App extends Component {
         </Layout>);
     }
 }
-
-App.propTypes = {
-    store: PropTypes.observableObject
-};

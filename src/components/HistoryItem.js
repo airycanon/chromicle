@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import {Row, Col, Checkbox, Icon, Badge} from 'antd';
 import PropTypes from 'prop-types';
+import {inject} from 'mobx-react';
 
+@inject('store')
 export default class HistoryItem extends Component {
 
     render() {
-        const {history} = this.props;
+        const {store, range, history} = this.props;
 
         return (<Row className="history-row">
                 <Col span={1}><Checkbox/></Col>
@@ -17,7 +19,9 @@ export default class HistoryItem extends Component {
                     />
                     <a className="history-label" target="_blank" href={history.url}>{history.title}</a>
                 </Col>
-                <Col span={1}><Icon type="close"/></Col>
+                <Col span={1}><Icon type="close" onClick={() => {
+                    store.remove(range, history)
+                }}/></Col>
             </Row>
         );
     }
@@ -25,4 +29,5 @@ export default class HistoryItem extends Component {
 
 HistoryItem.propTypes = {
     history: PropTypes.object.isRequired,
+    range: PropTypes.object.isRequired,
 };

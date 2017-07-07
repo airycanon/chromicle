@@ -10,7 +10,21 @@ class HistoryService {
                     maxResults: 49
                 },
                 historyItems => {
-                    resolve(historyItems)
+                    resolve(historyItems);
+                }
+            );
+        });
+    }
+
+    async delete(url) {
+
+        return new Promise((resolve) => {
+            chrome.history.deleteUrl(
+                {
+                    url: url
+                },
+                () => {
+                    resolve();
                 }
             );
         });

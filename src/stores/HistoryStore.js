@@ -18,16 +18,34 @@ class History {
 }
 
 class TimeRange {
-    histories = [];
+    @observable histories = [];
+    historiesMap = {};
+    key
 
-    constructor(start, end) {
-        this.start = start;
-        this.end = end;
+    constructor(key) {
+        this.key = key;
+    }
+
+    add(history) {
+        this.histories.push(history);
+        this.historiesMap[history.id] = this.histories.length - 1;
+    }
+
+    remove(history) {
+        let index = this.historiesMap[history.id];
+        this.histories.remove(history);
+    }
+
+    removeAll() {
+        this.histories = [];
+        this.historiesMap = {};
     }
 }
 
 export default class HistoryStore {
-    @observable ranges = {};
+    @observable ranges = [];
+
+    rangeKeys = {};
 
     query = {}
 
@@ -47,18 +65,44 @@ export default class HistoryStore {
     async getHistories() {
         let historyItems = await historyService.get(this.query);
 
-        let ranges = {};
         for (let historyItem of historyItems) {
-            let minute = moment(historyItem.lastVisitTime);
-            let key = minute.format('YYYY-MM-DD HH:mm');
-            if (!ranges[key]) {
-                ranges[key] = new TimeRange(minute.startOf('minute'), minute.endOf('minute'));
+            let key = moment(historyItem.lastVisitTime).format('YYYY-MM-DD HH:mm');
+            let range;
+            if (this.rangeKeys[key] === undefined) {
+                range = new TimeRange(key);
+                this.ranges.push(range);
+                this.rangeKeys[key] = this.ranges.length - 1;
+            } else {
+                range = this.ranges[this.rangeKeys[key]];
             }
-            ranges[key].histories.push(new History(historyItem));
-            this.ranges = ranges;
+            range.add(new History(historyItem));
         }
+
+        console.log(this.ranges);
     }
 
+    removeRange(range) {
+        let index = this.rangeKeys[range.key];
+        this.ranges.remove(range);
+        delete this.rangeKeys[range.key]
+    }
+
+    @action
+    async remove(range, history = null) {
+        if (history) {
+            await historyService.delete(history.url);
+            range.remove(history);
+            if (!range.histories.length) {
+                this.removeRange(range);
+            }
+        } else {
+            for (let history of range.histories) {
+                await historyService.delete(history.url);
+            }
+            range.removeAll();
+            this.removeRange(range)
+        }
+    }
 
     async init() {
         this.query = {
