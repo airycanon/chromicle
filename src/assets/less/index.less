@@ -11,18 +11,62 @@ div[data-reactroot] {
   height: 100%;
 }
 
+.ant-layout-header {
+  padding: 0;
+}
+
+.ant-layout-content {
+  padding: 30px 0;
+}
+
 .website-icon {
   -webkit-margin-end: 16px;
   background-repeat: no-repeat;
   background-size: 16px;
-  background-position: 0 4px;
-  height: 20px;
+  height: 16px;
   width: 16px;
+  display: inline-block;
 }
 
-.history-label {
+.history-card .ant-card-body {
+  padding: 12px 24px;
+}
+
+.history-row {
+  padding: 6px 0;
+  display: flex;
+  align-items: center
+}
+
+.history-row .ant-col-22 {
+  display: flex;
+  align-items: center
+}
+
+.history-row .history-label {
+  display: inline-block;
+  font-size: 14px;
+  color: #333;
   overflow: hidden;
   text-decoration: none;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.history-row .history-label:hover {
+  color: #108ee9
+}
+
+.history-row .anticon-close {
+  display: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.history-row:hover .anticon-close {
+  display: list-item;
+}
+
+.history-row .anticon-close:hover {
+  color: #108ee9
 }

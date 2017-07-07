@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import '../assets/less/index.less';
-import {Row, Col, Layout, Timeline} from 'antd';
+import {Row, Col, Layout, Timeline, Input} from 'antd';
 import {PropTypes, observer} from "mobx-react";
 import HistoryCard from './HistoryCard';
 
@@ -12,8 +12,19 @@ export default class App extends Component {
         const store = this.props.store;
 
         return (<Layout>
-            <Header className="header">
-                <div className="logo"/>
+            <Header>
+                <Row>
+                    <Col span={12} offset={6} style={{
+                        display: 'flex',
+                        justifyContent: 'flex-start',
+                        flexDirection: 'row',
+                        alignItems: 'center'
+                    }}>
+                        <div className="logo"/>
+                        <Input.Search placeholder="搜索历史记录" style={{width: 200, marginLeft: 'auto'}} onSearch={value => console.log(value)}
+                        />
+                    </Col>
+                </Row>
             </Header>
             <Content>
                 <Row>

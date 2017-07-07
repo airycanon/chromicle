@@ -8,7 +8,7 @@ export default class HistoryCard extends Component {
 
     render() {
         const {range, title} = this.props;
-        return (<Card title={title} extra={<HistoryMenu />}>
+        return (<Card className="history-card" title={title} extra={<HistoryMenu />}>
             {
                 range.histories.map(history => (<HistoryItem key={history.id} history={history}/>))
             }
