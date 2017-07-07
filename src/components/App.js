@@ -34,7 +34,7 @@ export default class App extends Component {
                             {
                                 store.ranges.map(range => (
                                     <Timeline.Item key={range.key}>
-                                        <HistoryCard key={range.key + 'cards'} title={range.key} range={range}/>
+                                        <HistoryCard key={range.key + 'cards'} range={range}/>
                                     </Timeline.Item>)
                                 )
                             }

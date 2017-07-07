@@ -6,9 +6,9 @@ export default class HistoryMenu extends Component {
 
     render() {
         return (<Dropdown overlay={
-            <Menu>
-                <Menu.Item>
-                    <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">删除</a>
+            <Menu onClick={this.props.click}>
+                <Menu.Item key="remove">
+                    <a rel="noopener noreferrer">删除</a>
                 </Menu.Item>
             </Menu>
         }>
@@ -17,4 +17,9 @@ export default class HistoryMenu extends Component {
             </a>
         </Dropdown>);
     }
+
+}
+
+HistoryMenu.propTypes = {
+    click: PropTypes.func.isRequired
 }
