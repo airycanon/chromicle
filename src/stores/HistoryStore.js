@@ -27,8 +27,10 @@ class TimeRange {
     }
 
     add(history) {
-        this.histories.push(history);
-        this.historiesMap[history.id] = this.histories.length - 1;
+        if (this.historiesMap[history.id] === undefined) {
+            this.histories.push(history);
+            this.historiesMap[history.id] = this.histories.length - 1;
+        }
     }
 
     remove(history) {
@@ -65,6 +67,9 @@ export default class HistoryStore {
     async getHistories() {
         let historyItems = await historyService.get(this.query);
 
+        this.ranges = [];
+        this.rangeKeys = {};
+
         for (let historyItem of historyItems) {
             let key = moment(historyItem.lastVisitTime).format('YYYY-MM-DD HH:mm');
             let range;
@@ -77,8 +82,6 @@ export default class HistoryStore {
             }
             range.add(new History(historyItem));
         }
-
-        console.log(this.ranges);
     }
 
     removeRange(range) {

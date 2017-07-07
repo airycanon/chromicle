@@ -4,7 +4,7 @@ class HistoryService {
         return new Promise((resolve) => {
             chrome.history.search(
                 {
-                    text: '',
+                    text: text,
                     startTime: start.valueOf(),
                     endTime: end.valueOf(),
                     maxResults: 49
