@@ -1,8 +1,8 @@
 {
-  "name": "react-babel-webpack-boilerplate",
+  "name": "Chromile",
   "version": "1.4.1",
-  "description": "A boilerplate for React-Babel-Webpack project",
-  "main": "app/main.jsx",
+  "description": "A Google Chrome history extension for better display and searching",
+  "main": "app/index.js",
   "scripts": {
     "watch": "webpack --env=dev --watch",
     "start": "webpack-dev-server --env=dev --hot --content-base src",
@@ -38,9 +38,10 @@
     "webpack-dev-server": "^2.4.5"
   },
   "keywords": [
+    "chrome extension",
     "es6",
-    "web app",
-    "boilerplate"
+    "react",
+    "mobx"
   ],
   "author": "airycanon",
   "license": "MIT"
