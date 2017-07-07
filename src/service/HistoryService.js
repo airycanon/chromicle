@@ -16,7 +16,7 @@ class HistoryService {
         });
     }
 
-    async delete(url) {
+    async remove(url) {
 
         return new Promise((resolve) => {
             chrome.history.deleteUrl(

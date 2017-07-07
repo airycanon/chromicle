@@ -100,7 +100,7 @@ export default class HistoryStore {
             }
         } else {
             for (let history of range.histories) {
-                await historyService.delete(history.url);
+                await historyService.remove(history.url);
             }
             range.removeAll();
             this.removeRange(range)

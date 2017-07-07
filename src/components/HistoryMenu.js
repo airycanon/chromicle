@@ -12,7 +12,7 @@ export default class HistoryMenu extends Component {
                 </Menu.Item>
             </Menu>
         }>
-            <a className="ant-dropdown-link" href="#">
+            <a className="ant-dropdown-link">
                 <Icon type="down-circle-o"/>
             </a>
         </Dropdown>);
