@@ -4,7 +4,8 @@
   "description": "Reads your history.",
   "permissions": [
     "history",
-    "storage"
+    "storage",
+    "chrome://favicon/*"
   ],
   "chrome_url_overrides": {
     "history": "index.html"
