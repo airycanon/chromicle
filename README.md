@@ -5,8 +5,8 @@ Chromicle is a Google Chrome history extension for better display and searching.
 - [x] Better display
 - [ ] Pagination
 - [x] Search by keyword
-- [ ] Search by time range
-- [x] Delete by time range
+- [x] Search by date range
+- [x] Delete by date range
 - [ ] Delete by selection
 
 # Thanks

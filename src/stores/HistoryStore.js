@@ -53,8 +53,8 @@ export default class HistoryStore {
 
     @action
     async setRange(start, end) {
-        this.query.start = start;
-        this.query.end = end;
+        this.query.start = start.startOf('day');
+        this.query.end = end.endOf('day');
         await this.getHistories();
     }
 
@@ -71,7 +71,14 @@ export default class HistoryStore {
         this.rangeKeys = {};
 
         for (let historyItem of historyItems) {
-            let key = moment(historyItem.lastVisitTime).format('YYYY-MM-DD HH:mm');
+            let time = moment(historyItem.lastVisitTime);
+
+            //some items maybe not between start and end,so filter them manually
+            if (this.query.start > time.valueOf() || this.query.end < time.valueOf()) {
+                continue;
+            }
+
+            let key = time.format('YYYY-MM-DD HH:mm');
             let range;
             if (this.rangeKeys[key] === undefined) {
                 range = new TimeRange(key);
