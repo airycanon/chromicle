@@ -9,6 +9,20 @@ Chromicle is a Google Chrome history extension for better display and searching.
 - [x] Delete by date range
 - [ ] Delete by selection
 
+# How to
+
+```
+yarn
+```
+For develop (need to refresh manually)
+```
+npm run watch
+```
+For production
+```
+npm run prod
+```
+
 # Thanks
 
 * [React](https://github.com/facebook/react)
