@@ -10,17 +10,17 @@ import {inject, observer} from "mobx-react";
 export default class HistoryCard extends Component {
 
     render() {
-        const {range} = this.props;
-        return (<Card className="history-card" title={range.key} extra={<HistoryMenu click={this.onMenuClick.bind(this)}/>}>
+        const {store, range} = this.props;
+
+        const menu = <HistoryMenu click={() => {
+            store.remove(range);
+        }}/>;
+
+        return (<Card className="history-card" title={range.key} extra={menu}>
             {
                 range.histories.map(history => (<HistoryItem key={history.id} range={range} history={history}/>))
             }
         </Card>)
-    }
-
-    onMenuClick(key) {
-        const {store, range} = this.props;
-        store.remove(range);
     }
 }
 
