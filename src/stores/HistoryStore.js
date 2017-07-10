@@ -100,7 +100,7 @@ export default class HistoryStore {
     @action
     async remove(range, history = null) {
         if (history) {
-            await historyService.delete(history.url);
+            await historyService.remove(history.url);
             range.remove(history);
             if (!range.histories.length) {
                 this.removeRange(range);
