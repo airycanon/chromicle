@@ -11,7 +11,7 @@ import Waypoint from 'react-waypoint';
 export default class App extends Component {
 
     onScrollToBottom(previousPosition, currentPosition, event) {
-        //todo Load more
+        this.props.store.more();
     }
 
     render() {

@@ -46,55 +46,32 @@ class TimeRange {
 
 export default class HistoryStore {
     @observable ranges = [];
-
     rangeKeys = {};
+    page = 1;
 
-    query = {}
+    @action
+    async init() {
+        let items = await historyService.text('').get();
+        this.build(items);
+    }
 
     @action
     async setRange(start, end) {
-        this.query.start = start.startOf('day');
-        this.query.end = end.endOf('day');
-        await this.getHistories();
+        let items = await historyService.range(start.startOf('day'), end.endOf('day')).get();
+        this.build(items);
     }
 
     @action
     async setText(text) {
-        this.query.text = text;
-        await this.getHistories();
+        let items = await historyService.text(text).get();
+        this.build(items);
     }
 
-    async getHistories() {
-        let historyItems = await historyService.get(this.query);
-
-        this.ranges = [];
-        this.rangeKeys = {};
-
-        for (let historyItem of historyItems) {
-            let time = moment(historyItem.lastVisitTime);
-
-            //some items maybe not between start and end,so filter them manually
-            if (this.query.start > time.valueOf() || this.query.end < time.valueOf()) {
-                continue;
-            }
-
-            let key = time.format('YYYY-MM-DD HH:mm');
-            let range;
-            if (this.rangeKeys[key] === undefined) {
-                range = new TimeRange(key);
-                this.ranges.push(range);
-                this.rangeKeys[key] = this.ranges.length - 1;
-            } else {
-                range = this.ranges[this.rangeKeys[key]];
-            }
-            range.add(new History(historyItem));
-        }
-    }
-
-    removeRange(range) {
-        let index = this.rangeKeys[range.key];
-        this.ranges.remove(range);
-        delete this.rangeKeys[range.key]
+    @action
+    async more() {
+        this.page++;
+        let items = await historyService.get(this.page);
+        this.build(items);
     }
 
     @action
@@ -114,13 +91,26 @@ export default class HistoryStore {
         }
     }
 
-    async init() {
-        this.query = {
-            start: moment().startOf('day'),
-            end: moment().endOf('day'),
-            text: ''
-        }
+    build(historyItems) {
+        for (let historyItem of historyItems) {
+            let time = moment(historyItem.lastVisitTime);
 
-        return await this.getHistories();
+            let key = time.format('YYYY-MM-DD HH:mm');
+            let range;
+            if (this.rangeKeys[key] === undefined) {
+                range = new TimeRange(key);
+                this.ranges.push(range);
+                this.rangeKeys[key] = this.ranges.length - 1;
+            } else {
+                range = this.ranges[this.rangeKeys[key]];
+            }
+            range.add(new History(historyItem));
+        }
+    }
+
+    removeRange(range) {
+        let index = this.rangeKeys[range.key];
+        this.ranges.remove(range);
+        delete this.rangeKeys[range.key]
     }
 }
