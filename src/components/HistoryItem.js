@@ -18,10 +18,10 @@ export default class HistoryItem extends Component {
                     }}
                     />
                     <a className="history-label" target="_blank" href={history.url}>{history.title}</a>
+                    <Icon type="close" onClick={() => {
+                        store.remove(range, history)
+                    }}/>
                 </Col>
-                <Col span={1}><Icon type="close" onClick={() => {
-                    store.remove(range, history)
-                }}/></Col>
             </Row>
         );
     }
