@@ -48,7 +48,9 @@ module.exports = {
         new CopyWebpackPlugin([
             {from: "src/manifest.json", to: './'},
             {from: "src/index.html", to: './'},
-            {from: 'src/assets/fonts', to: './fonts'}
+            {from: 'src/assets/fonts', to: './assets/fonts'},
+            {from: 'src/assets/images', to: './assets/images'},
+            {from: 'src/background.js', to: './'}
         ]),
         new webpack.LoaderOptionsPlugin({
             minimize: true,

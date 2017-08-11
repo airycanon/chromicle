@@ -1,7 +1,13 @@
 {
   "name": "Chromicle",
   "version": "0.1",
-  "description": "Reads your history.",
+  "description": "Better display for your histories",
+  "author": "airycanon <airycanon@airycanon.me>",
+  "icons": {
+    "16": "assets/images/icon16.png",
+    "48": "assets/images/icon48.png",
+    "128": "assets/images/icon128.png"
+  },
   "permissions": [
     "history",
     "storage",
@@ -9,6 +15,16 @@
   ],
   "chrome_url_overrides": {
     "history": "index.html"
+  },
+  "browser_action": {
+    "default_icon": "assets/images/icon48.png",
+    "default_title": "Chromicle"
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": false
   },
   "offline_enabled": true,
   "manifest_version": 2
