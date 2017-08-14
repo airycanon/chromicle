@@ -67,6 +67,7 @@ export default class HistoryStore {
     @action
     async setText(text) {
         let items = await historyService.text(text).get();
+        this.clear();
         this.add(items);
     }
 
