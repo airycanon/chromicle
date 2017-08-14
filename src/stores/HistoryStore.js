@@ -51,27 +51,30 @@ export default class HistoryStore {
 
     @action
     async init() {
-        let items = await historyService.text('').get();
-        this.build(items);
+        let end = moment().endOf('day');
+        let start = moment().subtract(90, 'days').startOf('day');
+        let items = await historyService.text('').range(start, end).get();
+        this.add(items);
     }
 
     @action
     async setRange(start, end) {
         let items = await historyService.range(start.startOf('day'), end.endOf('day')).get();
-        this.build(items);
+        this.clear();
+        this.add(items);
     }
 
     @action
     async setText(text) {
         let items = await historyService.text(text).get();
-        this.build(items);
+        this.add(items);
     }
 
     @action
     async more() {
         this.page++;
         let items = await historyService.get(this.page);
-        this.build(items);
+        this.add(items);
     }
 
     @action
@@ -91,7 +94,12 @@ export default class HistoryStore {
         }
     }
 
-    build(historyItems) {
+    clear() {
+        this.rangeKeys = {};
+        this.ranges = [];
+    }
+
+    add(historyItems) {
         for (let historyItem of historyItems) {
             let time = moment(historyItem.lastVisitTime);
 
