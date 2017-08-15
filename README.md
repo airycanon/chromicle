@@ -6,7 +6,7 @@ Chromicle 是一个展示历史记录的 Chrome 扩展，Chrome 早期的历史�
 
 目前比较好的第三方扩展是 Better History，但没有完全符合我的要求，因此才有了本项目。
 
-#安装
+# 安装
 
 可以从 [chrome 应用商店](https://chrome.google.com/webstore/detail/chromicle/ljblncheanainapijcjkljcbcjjmnnag?hl=zh-CN)或者 [下载](https://airycanon.me/static/chromicle.crx) 安装本项目
 
