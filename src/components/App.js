@@ -37,7 +37,7 @@ export default class App extends Component {
                 <Waypoint bottomOffset={-100} scrollableAncestor={window} onEnter={this.onScrollToBottom.bind(this)}/>
             </Content>
             <Footer style={{textAlign: 'center'}}>
-                Chrome by airycanon
+                Chromicle by airycanon
             </Footer>
         </Layout>);
     }

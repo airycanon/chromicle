@@ -15,8 +15,7 @@ export default class HistoryItem extends Component {
                     <div className="website-icon" style={{
                         backgroundImage: '-webkit-image-set(url(chrome://favicon/size/16@1x/' + history.url + ') 1x,' +
                         ' url(chrome://favicon/size/16@2x/' + history.url + ') 2x)'
-                    }}
-                    />
+                    }}/>
                     <a className="history-label" target="_blank" href={history.url}>{history.title}</a>
                     <Icon type="close" onClick={() => {
                         store.remove(range, history)
