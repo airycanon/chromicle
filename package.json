@@ -4,9 +4,7 @@
   "description": "A Google Chrome history extension for better display and searching",
   "main": "app/index.js",
   "scripts": {
-    "watch": "webpack --env=dev --watch",
-    "start": "webpack-dev-server --env=dev --hot --content-base src",
-    "dev": "webpack --env=dev --progress --colors",
+    "dev": "webpack --env=dev --watch",
     "prod": "webpack --env=prod --progress --profile --colors"
   },
   "dependencies": {
