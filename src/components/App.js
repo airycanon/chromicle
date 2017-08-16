@@ -6,17 +6,17 @@ import Header from './Header';
 import HistoryCard from './HistoryCard';
 import Waypoint from 'react-waypoint';
 
-@inject('store')
+@inject('historyStore')
 @observer
 export default class App extends Component {
 
     onScrollToBottom(previousPosition, currentPosition, event) {
-        this.props.store.more();
+        this.props.historyStore.more();
     }
 
     render() {
-        const {Content, Footer} = Layout;
-        const store = this.props.store;
+        const {Content} = Layout;
+        const {historyStore} = this.props;
 
         return (<Layout>
             <Header/>
@@ -25,7 +25,7 @@ export default class App extends Component {
                     <Col offset={6} span={12}>
                         <Timeline onScroll={this.onScroll}>
                             {
-                                store.ranges.map(range => (
+                                historyStore.ranges.map(range => (
                                     <Timeline.Item key={range.key}>
                                         <HistoryCard key={range.key + 'cards'} range={range}/>
                                     </Timeline.Item>)
@@ -36,9 +36,6 @@ export default class App extends Component {
                 </Row>
                 <Waypoint bottomOffset={-100} scrollableAncestor={window} onEnter={this.onScrollToBottom.bind(this)}/>
             </Content>
-            <Footer style={{textAlign: 'center'}}>
-                Chromicle by airycanon
-            </Footer>
         </Layout>);
     }
 }

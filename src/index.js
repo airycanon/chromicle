@@ -1,14 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
-import HistoryStore from './stores/HistoryStore';
+import historyStore from './stores/HistoryStore';
+import viewStore from './stores/ViewStore';
 import {Provider} from 'mobx-react';
 
-let store = new HistoryStore();
-store.init();
-
 ReactDOM.render(
-    <Provider store={store}>
+    <Provider historyStore={historyStore} viewStore={viewStore}>
         <App />
     </Provider>,
     document.getElementById('app')

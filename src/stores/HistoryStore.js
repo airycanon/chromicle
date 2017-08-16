@@ -6,21 +6,28 @@ class History {
     title = '';
     id = '';
     url = '';
+    rangeKey = '';
     lastVisitTime = '';
     visitCount = 0;
     typedCount = 0;
+    @observable checked = false;
 
     constructor(historyObject) {
         Object.assign(this, historyObject);
         this.lastVisitTime = moment(this.lastVisitTime);
+        this.rangeKey = this.lastVisitTime.format('YYYY-MM-DD HH:mm');
         this.title = this.title || this.url;
+    }
+
+    async remove() {
+        await historyService.remove(this.url);
     }
 }
 
 class TimeRange {
     @observable histories = [];
     historiesMap = {};
-    key
+    key;
 
     constructor(key) {
         this.key = key;
@@ -29,24 +36,30 @@ class TimeRange {
     add(history) {
         if (this.historiesMap[history.id] === undefined) {
             this.histories.push(history);
-            this.historiesMap[history.id] = this.histories.length - 1;
+            this.historiesMap[history.id] = history;
         }
     }
 
-    remove(history) {
-        let index = this.historiesMap[history.id];
-        this.histories.remove(history);
+    async remove(history) {
+        if (this.histories.remove(history)) {
+            await history.remove();
+            delete this.historiesMap[history.id];
+        }
     }
 
-    removeAll() {
+    async removeAll() {
+        for (let history of this.histories) {
+            await history.remove();
+        }
+
         this.histories = [];
         this.historiesMap = {};
     }
 }
 
-export default class HistoryStore {
+class HistoryStore {
     @observable ranges = [];
-    rangeKeys = {};
+    rangeMaps = {};
     page = 1;
 
     @action
@@ -79,47 +92,50 @@ export default class HistoryStore {
     }
 
     @action
-    async remove(range, history = null) {
-        if (history) {
-            await historyService.remove(history.url);
-            range.remove(history);
-            if (!range.histories.length) {
-                this.removeRange(range);
-            }
-        } else {
-            for (let history of range.histories) {
-                await historyService.remove(history.url);
-            }
-            range.removeAll();
-            this.removeRange(range)
+    async removeRange(range) {
+        if (this.ranges.remove(range)) {
+            await range.removeAll();
+            delete this.rangeMaps[range.key]
+        }
+    }
+
+    @action
+    async removeHistory(history) {
+        let range = this.getRange(history.rangeKey);
+        await range.remove(history);
+        if (!range.histories.length) {
+            await this.removeRange(range);
         }
     }
 
     clear() {
-        this.rangeKeys = {};
+        this.rangeMaps = {};
         this.ranges = [];
     }
 
     add(historyItems) {
         for (let historyItem of historyItems) {
-            let time = moment(historyItem.lastVisitTime);
-
-            let key = time.format('YYYY-MM-DD HH:mm');
-            let range;
-            if (this.rangeKeys[key] === undefined) {
-                range = new TimeRange(key);
-                this.ranges.push(range);
-                this.rangeKeys[key] = this.ranges.length - 1;
-            } else {
-                range = this.ranges[this.rangeKeys[key]];
-            }
-            range.add(new History(historyItem));
+            let history = new History(historyItem);
+            let range = this.getRange(history.rangeKey);
+            range.add(history);
         }
     }
 
-    removeRange(range) {
-        let index = this.rangeKeys[range.key];
-        this.ranges.remove(range);
-        delete this.rangeKeys[range.key]
+    getRange(key) {
+        let range;
+        if (this.rangeMaps[key] === undefined) {
+            range = new TimeRange(key);
+            this.ranges.push(range);
+            this.rangeMaps[key] = range;
+        } else {
+            range = this.rangeMaps[key];
+        }
+
+        return range;
     }
 }
+
+let historyStore = new HistoryStore();
+historyStore.init();
+
+export default historyStore;

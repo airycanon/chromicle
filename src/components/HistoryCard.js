@@ -5,20 +5,20 @@ import HistoryMenu from './HistoryMenu';
 import HistoryItem from './HistoryItem';
 import {inject, observer} from "mobx-react";
 
-@inject('store')
+@inject('historyStore')
 @observer
 export default class HistoryCard extends Component {
 
     render() {
-        const {store, range} = this.props;
+        const {historyStore, range} = this.props;
 
         const menu = <HistoryMenu click={() => {
-            store.remove(range);
+            historyStore.removeRange(range);
         }}/>;
 
         return (<Card className="history-card" title={range.key} extra={menu}>
             {
-                range.histories.map(history => (<HistoryItem key={history.id} range={range} history={history}/>))
+                range.histories.map(history => (<HistoryItem key={history.id} history={history}/>))
             }
         </Card>)
     }

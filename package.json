@@ -1,6 +1,6 @@
 {
   "name": "Chromile",
-  "version": "1.4.1",
+  "version": "0.1.1",
   "description": "A Google Chrome history extension for better display and searching",
   "main": "app/index.js",
   "scripts": {
