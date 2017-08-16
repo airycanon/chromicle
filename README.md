@@ -8,7 +8,7 @@ Chromicle 是一个展示历史记录的 Chrome 扩展，Chrome 早期的历史�
 
 # 安装
 
-可以从 [chrome 应用商店](https://chrome.google.com/webstore/detail/chromicle/ljblncheanainapijcjkljcbcjjmnnag?hl=zh-CN)或者 [下载](https://airycanon.me/static/chromicle.crx) 安装本项目
+可以从 [Chrome 应用商店](https://chrome.google.com/webstore/detail/chromicle/ljblncheanainapijcjkljcbcjjmnnag?hl=zh-CN) 或者 [下载](https://airycanon.me/static/chromicle.crx) 安装本项目
 
 # 开发
 
