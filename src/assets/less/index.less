@@ -36,16 +36,16 @@ div[data-reactroot] {
 .history-row {
   padding: 6px 0;
   display: flex;
-  align-items: center
+  align-items: center;
+  position:relative;
 }
 
-.history-row .ant-col-22 {
+.history-row .ant-col-21 {
   display: flex;
   align-items: center
 }
 
 .history-row .website-icon {
-  -webkit-margin-end: 16px;
   background-repeat: no-repeat;
   background-size: 16px;
   height: 16px;
@@ -54,6 +54,7 @@ div[data-reactroot] {
 }
 
 .history-row .history-label {
+  margin:1px 5px 0 15px;
   display: inline-block;
   font-size: 14px;
   color: #333;
@@ -67,23 +68,22 @@ div[data-reactroot] {
   color: #108ee9
 }
 
-.history-row .anticon-close {
-  margin-left: 15px;
+.history-row .anticon {
   display: none;
   font-size: 16px;
-  font-weight: bold;
   cursor: pointer;
+  margin-left: 10px;
 }
 
-.history-row:hover .anticon-close {
-  display: list-item;
+.history-row:hover .anticon {
+  display: inline-block;
 }
 
 .history-row .anticon-close:hover {
   color: #FF0000
 }
 
-.header-right {
+.col-right {
   display: flex;
   justify-content: flex-end;
   flex-direction: row;

@@ -14,7 +14,7 @@ export default class Header extends Component {
             headerLeft = <Col span={6} offset={6}>
                 <span className="header-selected-info">已选择 {viewStore.selectedHistories.length} 项</span>
             </Col>;
-            headerRight = <Col span={6} className="header-right">
+            headerRight = <Col span={6} className="header-right col-right">
                 <Col span={6}>
                     <Button ghost onClick={this.onCancel.bind(this)}>取消</Button>
                 </Col>
@@ -26,7 +26,7 @@ export default class Header extends Component {
             headerLeft = <Col span={6} offset={6}>
                 <DatePicker.RangePicker onChange={this.onChange.bind(this)}/>
             </Col>;
-            headerRight = <Col className="header-right" span={6}>
+            headerRight = <Col className="header-right col-right" span={6}>
                 <Input.Search placeholder="搜索历史记录" onSearch={this.onSearch.bind(this)}/>
             </Col>
         }
