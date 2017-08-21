@@ -19,7 +19,7 @@ export default class HistoryItem extends Component {
                         backgroundImage: '-webkit-image-set(url(chrome://favicon/size/16@1x/' + history.url + ') 1x,' +
                         ' url(chrome://favicon/size/16@2x/' + history.url + ') 2x)'
                     }}/>
-                    <a className="history-label" target="_blank" href={history.url}>{history.id} - {history.title}</a>
+                    <a className="history-label" target="_blank" href={history.url}>{history.title}</a>
                 </Col>
                 <Col className="col-right" span={2}>
                     <Tooltip placement="top" title="收藏">
