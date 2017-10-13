@@ -10,9 +10,9 @@ export default class Header extends Component {
         const {viewStore} = this.props;
 
         let headerLeft, headerRight;
-        if (viewStore.hasSelected) {
+        if (viewStore.hasChecked) {
             headerLeft = <Col span={6} offset={6}>
-                <span className="header-selected-info">已选择 {viewStore.selectedHistories.length} 项</span>
+                <span className="header-selected-info">已选择 {viewStore.checkedHistories.length} 项</span>
             </Col>;
             headerRight = <Col span={6} className="header-right col-right">
                 <Col span={6}>
