@@ -2,13 +2,14 @@ import React, {Component} from 'react';
 import {Row, Col, Checkbox, Icon, Tooltip} from 'antd';
 import PropTypes from 'prop-types';
 import {inject, observer} from 'mobx-react';
+import viewStore from "../stores/ViewStore";
 
-@inject('historyStore', 'viewStore')
+@inject('historyStore', 'viewStore', 'bookmarkStore')
 @observer
 export default class HistoryItem extends Component {
 
     render() {
-        const {historyStore, history} = this.props;
+        const {historyStore, bookmarkStore, history} = this.props;
 
         return (<Row className="history-row">
                 <Col span={1}>
@@ -24,7 +25,7 @@ export default class HistoryItem extends Component {
                 <Col className="col-right" span={2}>
                     <Tooltip placement="top" title="收藏">
                         <Icon type="star-o" onClick={() => {
-
+                            viewStore.showBookmark = true;
                         }}/>
                     </Tooltip>
                     <Tooltip placement="top" title="删除">
@@ -43,12 +44,10 @@ export default class HistoryItem extends Component {
         history.checked = event.target.checked;
 
         if (event.target.checked) {
-            viewStore.selectedHistories.push(history);
+            viewStore.addChecked(history);
         } else {
-            viewStore.selectedHistories.remove(history);
+            viewStore.addChecked(history);
         }
-
-        console.log(history.id);
     }
 }
 

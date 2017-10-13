@@ -10,6 +10,7 @@
   },
   "permissions": [
     "history",
+    "bookmarks",
     "storage",
     "chrome://favicon/*"
   ],
