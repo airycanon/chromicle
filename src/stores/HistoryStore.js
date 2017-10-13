@@ -1,5 +1,6 @@
 import {observable, action, computed} from 'mobx';
 import historyService from '../service/HistoryService';
+import bookmarkService from '../service/BookmarkService';
 import moment from 'moment';
 
 class History {
@@ -8,8 +9,7 @@ class History {
     url = '';
     rangeKey = '';
     lastVisitTime = '';
-    visitCount = 0;
-    typedCount = 0;
+    @observable bookmark = null;
     @observable checked = false;
 
     constructor(historyObject) {
@@ -113,9 +113,10 @@ class HistoryStore {
         this.ranges = [];
     }
 
-    add(historyItems) {
+    async add(historyItems) {
         for (let historyItem of historyItems) {
             let history = new History(historyItem);
+            history.bookmark = await bookmarkService.search(history.url);
             let range = this.getRange(history.rangeKey);
             range.add(history);
         }

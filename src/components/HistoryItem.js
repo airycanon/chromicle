@@ -2,14 +2,15 @@ import React, {Component} from 'react';
 import {Row, Col, Checkbox, Icon, Tooltip} from 'antd';
 import PropTypes from 'prop-types';
 import {inject, observer} from 'mobx-react';
-import viewStore from "../stores/ViewStore";
 
 @inject('historyStore', 'viewStore', 'bookmarkStore')
 @observer
 export default class HistoryItem extends Component {
 
     render() {
-        const {historyStore, bookmarkStore, history} = this.props;
+        const {historyStore, viewStore, history} = this.props;
+
+        const star = history.bookmark ? 'star' : 'star-o';
 
         return (<Row className="history-row">
                 <Col span={1}>
@@ -23,9 +24,9 @@ export default class HistoryItem extends Component {
                     <a className="history-label" target="_blank" href={history.url}>{history.title}</a>
                 </Col>
                 <Col className="col-right" span={2}>
-                    <Tooltip placement="top" title="收藏">
-                        <Icon type="star-o" onClick={() => {
-                            viewStore.showBookmark = true;
+                    <Tooltip placement="top" title="添加到书签">
+                        <Icon type={star} onClick={() => {
+                            viewStore.bookmarkHistory = history;
                         }}/>
                     </Tooltip>
                     <Tooltip placement="top" title="删除">

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Row, Col, Icon} from 'antd';
+import {Row, Col, Icon, message} from 'antd';
 import PropTypes from 'prop-types';
 import {observer, inject} from "mobx-react";
 
@@ -14,16 +14,15 @@ export default class BookmarkItem extends Component {
     }
 
     onBookmarkSelect(node) {
-        const {viewStore} = this.props;
-        viewStore.selectedBookmark = node;
+        const {bookmarkStore, viewStore} = this.props;
+        bookmarkStore.add(viewStore.bookmarkHistory,node);
+        viewStore.bookmarkHistory = null;
+        message.success(`已添加书签到 ${node.title} 中`, 3);
     }
 
     render() {
         const {viewStore, bookmark} = this.props;
         const style = {wordWrap: 'break-word'};
-        if (viewStore.selectedBookmark && viewStore.selectedBookmark.id === bookmark.id) {
-            style.color = '#3143fa';
-        }
 
         let icon = '';
 
@@ -31,8 +30,7 @@ export default class BookmarkItem extends Component {
             icon = <Icon style={{fontSize: 16}} onClick={() => this.onBookmarkClick(bookmark)} type="right"/>
         }
 
-        return (<Row type="flex" justify="space-between" align="middle"
-                     onClick={() => this.onBookmarkSelect(bookmark)}>
+        return (<Row type="flex" justify="space-between" align="middle" onClick={() => this.onBookmarkSelect(bookmark)}>
             <Col style={style} span={20}>{bookmark.title}</Col>
             <Col span={2}>{icon}</Col>
         </Row>)

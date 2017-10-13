@@ -4,11 +4,9 @@ import historyStore from './HistoryStore';
 class ViewStore {
     @observable checkedHistories = [];
 
-    @observable showBookmark = false;
+    @observable bookmarkHistory = null;
 
     @observable breadcrumbs = [];
-
-    @observable selectedBookmark = null;
 
     @computed
     get hasChecked() {
@@ -40,15 +38,11 @@ class ViewStore {
 
     @action
     addBreadcrumb(node) {
-        this.selectedBookmark = null;
         this.breadcrumbs.push(node);
     }
 
     @action
     changeBreadcrumb(index) {
-        if (index !== this.breadcrumbs.length - 1) {
-            this.selectedBookmark = null;
-        }
         this.breadcrumbs.splice(index + 1);
     }
 }

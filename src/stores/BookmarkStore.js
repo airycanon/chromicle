@@ -25,7 +25,25 @@ class BookmarkStore {
             bookmark.children = await bookmarkService.getFolder(bookmark.id);
             return bookmark;
         }));
-        console.log(this.nodes);
+    }
+
+    @action
+    async add(history, bookmark) {
+        if (history.bookmark) {
+            bookmarkService.move(history.bookmark.id, bookmark.id);
+        } else {
+            const data = {
+                title: history.title,
+                url: history.url,
+                parentId: bookmark.id
+            }
+            history.bookmark  = await bookmarkService.create(data);
+        }
+    }
+
+    @action
+    async move(bookmark, parent) {
+        bookmarkService.move(bookmark.id, parent.id);
     }
 }
 

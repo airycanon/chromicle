@@ -29,7 +29,7 @@ export default class App extends Component {
 
         return (<Layout>
             <Header/>
-            <Modal visible={viewStore.showBookmark} okText="确认" onCancel={() =>{viewStore.showBookmark = false}} cancelText="取消" style={{padding: 10}}>
+            <Modal visible={viewStore.bookmarkHistory !== null} onCancel={() =>{viewStore.bookmarkHistory = null}} style={{padding: 10}} footer={null}>
                 <Breadcrumb>{
                     viewStore.breadcrumbs.map((breadcrumb, index) => (
                         <Breadcrumb.Item style={{cursor: 'pointer'}} onClick={() => this.onBreadcrumbClick(breadcrumb, index)}
