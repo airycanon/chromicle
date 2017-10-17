@@ -21,5 +21,5 @@ export default class HistoryMenu extends Component {
 }
 
 HistoryMenu.propTypes = {
-    click: PropTypes.func.isRequired
+    onRemove: PropTypes.func.isRequired
 }

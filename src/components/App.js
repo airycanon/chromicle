@@ -6,8 +6,9 @@ import Header from './Header';
 import HistoryCard from './HistoryCard';
 import BookmarkCard from './BookmarkCard';
 import Waypoint from 'react-waypoint';
+import BookmarkBreadcrumb from "./BookmarkBreadcrumb";
 
-@inject('historyStore', 'viewStore', 'bookmarkStore')
+@inject('historyStore', 'viewStore','bookmarkStore')
 @observer
 export default class App extends Component {
 
@@ -15,12 +16,11 @@ export default class App extends Component {
         this.props.historyStore.more();
     }
 
-    onBreadcrumbClick(node, index) {
-        this.setState({selected:node.id});
-
+    componentDidMount() {
+        const node = {id: '1', title: '书签栏'};
         const {viewStore, bookmarkStore} = this.props;
         bookmarkStore.select(node);
-        viewStore.changeBreadcrumb(index);
+        viewStore.addBreadcrumb(node);
     }
 
     render() {
@@ -29,15 +29,8 @@ export default class App extends Component {
 
         return (<Layout>
             <Header/>
-            <Modal visible={viewStore.bookmarkHistory !== null} onCancel={() =>{viewStore.bookmarkHistory = null}} style={{padding: 10}} footer={null}>
-                <Breadcrumb>{
-                    viewStore.breadcrumbs.map((breadcrumb, index) => (
-                        <Breadcrumb.Item style={{cursor: 'pointer'}} onClick={() => this.onBreadcrumbClick(breadcrumb, index)}
-                                         key={'breadcrumb' + breadcrumb.id}>
-                            {breadcrumb.title}
-                        </Breadcrumb.Item>
-                    ))
-                }</Breadcrumb>
+            <Modal visible={viewStore.bookmarkHistory !== null} onCancel={() => {viewStore.bookmarkHistory = null}} footer={null}>
+                <BookmarkBreadcrumb/>
                 <BookmarkCard/>
             </Modal>
             <Content>

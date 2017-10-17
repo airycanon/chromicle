@@ -8,19 +8,16 @@ import {inject, observer} from "mobx-react";
 @inject('historyStore')
 @observer
 export default class HistoryCard extends Component {
-
     render() {
         const {historyStore, range} = this.props;
 
-        const menu = <HistoryMenu click={() => {
+        const menu = <HistoryMenu onRemove={() => {
             historyStore.removeRange(range);
         }}/>;
 
-        return (<Card className="history-card" title={range.key} extra={menu}>
-            {
-                range.histories.map(history => (<HistoryItem key={history.id} history={history}/>))
-            }
-        </Card>)
+        return (<Card className="history-card" title={range.key} extra={menu}>{
+            range.histories.map(history => (<HistoryItem key={history.id} history={history}/>))
+        }</Card>)
     }
 }
 
